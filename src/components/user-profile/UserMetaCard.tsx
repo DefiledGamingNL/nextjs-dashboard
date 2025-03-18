@@ -19,6 +19,7 @@ export default function UserMetaCard() {
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const setProfile = useAuthStore((state) => state.setProfile);
+  const profile = useAuthStore((state) => state.profile);
 
   // Fetch user data from Supabase
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function UserMetaCard() {
       // Fetch profile from Supabase
       const { data: profileData, error: profileError } = await supabase
         .from("profiles")
-        .select(`full_name, username`)
+        .select(`full_name, username, role`)
         .eq("id", userId)
         .single();
 
@@ -92,7 +93,7 @@ export default function UserMetaCard() {
             />
             <div className="order-3 xl:order-2">
               <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
-                {username || "Username not set"}
+                {username || "Username not set"} - {profile?.role}
               </h4>
             </div>
             <div className="flex items-center order-2 gap-2 grow xl:order-3 xl:justify-end">

@@ -9,6 +9,7 @@ interface UserProfile {
   position: string;
   phone: string;
   avatar_url: string;
+  role: string;
 }
 
 type AuthStore = {

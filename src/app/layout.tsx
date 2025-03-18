@@ -5,14 +5,13 @@ import { SidebarProvider } from "@/context/SidebarContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 import { Toaster } from "sonner";
-import AuthProvider from "@/store/AuthProvider";
 
 const outfit = Outfit({
   variable: "--font-outfit-sans",
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -22,9 +21,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} dark:bg-gray-900`}>
         <ThemeProvider>
           <ProfileProvider>
-            <SidebarProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </SidebarProvider>
+            <SidebarProvider>{children}</SidebarProvider>
           </ProfileProvider>
         </ThemeProvider>
         <Toaster />
