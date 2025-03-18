@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} dark:bg-gray-900`}>
         <ThemeProvider>
           <ProfileProvider>
-          <SidebarProvider>{children}</SidebarProvider>
+            <SidebarProvider>{children}</SidebarProvider>
           </ProfileProvider>
         </ThemeProvider>
         <Toaster />

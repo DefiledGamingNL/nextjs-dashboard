@@ -50,37 +50,35 @@ export default async function UsersTable() {
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {profiles?.map((profile: Profiles) => {
                 return (
-                  <>
-                    <TableRow key={profile.id}>
-                      <TableCell className="px-5 py-3">
-                        <div className="flex items-center space-x-3">
-                          <div>
-                            <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                              <UserAvatar
-                                allowUpload={false}
-                                className="w-16 h-16 object-cover"
-                                userId={profile?.id}
-                              />
-                            </h3>
-                          </div>
+                  <TableRow key={profile.id}>
+                    <TableCell className="px-5 py-3">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                            <UserAvatar
+                              allowUpload={false}
+                              className="w-16 h-16 object-cover"
+                              userId={profile?.id}
+                            />
+                          </h3>
                         </div>
-                      </TableCell>
-                      <TableCell className="px-5 py-3">
-                        <div className="flex items-center space-x-3">
-                          <div>
-                            <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                              {profile?.full_name}
-                            </h3>
-                          </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-5 py-3">
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                            {profile?.full_name}
+                          </h3>
                         </div>
-                      </TableCell>
-                      <TableCell className="px-5 py-3">
-                        <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                          {profile?.position}
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  </>
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-5 py-3">
+                      <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                        {profile?.position}
+                      </span>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
             </TableBody>
