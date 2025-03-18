@@ -7,6 +7,8 @@ import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { createClient } from "@/utils/supabase/client";
 import UserAvatar from "../UserAvatar";
+import { useAuthStore } from "@/store/authStore";
+import { toast } from "sonner";
 
 export default function UserMetaCard() {
   const supabase = createClient();
@@ -16,7 +18,7 @@ export default function UserMetaCard() {
   const [user, setUser] = useState<any | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const setProfile = useAuthStore((state) => state.setProfile);
 
   // Fetch user data from Supabase
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function UserMetaCard() {
       // Fetch profile from Supabase
       const { data: profileData, error: profileError } = await supabase
         .from("profiles")
-        .select(`full_name, username, avatar_url`)
+        .select(`full_name, username`)
         .eq("id", userId)
         .single();
 
@@ -46,6 +48,7 @@ export default function UserMetaCard() {
 
       setUser(authData.user);
       setUsername(profileData.username);
+
       setLoading(false);
     }
 
@@ -59,7 +62,7 @@ export default function UserMetaCard() {
 
     const { error } = await supabase
       .from("profiles")
-      .update({ username, updated_at: new Date().toISOString(), avatar_url })
+      .update({ username, updated_at: new Date().toISOString() })
       .eq("id", user.id);
 
     if (error) {
@@ -67,7 +70,9 @@ export default function UserMetaCard() {
       return;
     }
 
-    alert("Username updated successfully!");
+    setProfile({ ...user, username });
+
+    toast.success("Username updated successfully");
     closeModal();
     setLoading(false);
   };

@@ -4,9 +4,12 @@ import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { useProfile } from "@/context/ProfileContext";
 import UserAvatar from "../UserAvatar";
+import { useAuthStore } from "@/store/authStore";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const profile = useAuthStore((state) => state.profile);
 
   function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.stopPropagation();
@@ -16,10 +19,6 @@ export default function UserDropdown() {
   function closeDropdown() {
     setIsOpen(false);
   }
-
-  const { profile, loading } = useProfile();
-
-  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="relative">
@@ -68,7 +67,7 @@ export default function UserDropdown() {
             {profile?.username || "Guest"}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            {profile?.email}
+            {user?.email}
           </span>
         </div>
 
