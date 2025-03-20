@@ -1,6 +1,6 @@
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import VacatureTable from "@/components/tables/BasicTableOne";
+import VacatureTable from "@/components/tables/VacatureTable";
 import { Metadata } from "next";
 import React from "react";
 import { createClient } from "@/utils/supabase/server";

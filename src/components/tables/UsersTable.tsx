@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Table,
@@ -8,7 +7,6 @@ import {
   TableRow,
 } from "../ui/table";
 import UserAvatar from "../UserAvatar";
-import { useAuthStore } from "@/store/authStore";
 
 interface Profiles {
   id: string;
@@ -17,8 +15,7 @@ interface Profiles {
   role: string;
 }
 
-export default function UsersTable() {
-  const profiles = useAuthStore((state) => state.profiles);
+export default function UsersTable({ profiles }: { profiles: Profiles[] }) {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">

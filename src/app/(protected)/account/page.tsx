@@ -6,6 +6,9 @@ import UserMetaCard from "@/components/user-profile/UserMetaCard";
 import UserInfoCard from "@/components/user-profile/UserInfoCard";
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import { isLoggedIn } from "@/utils/supabase/loggedIn";
+import InfoCard from "@/components/user-profile/InfoCard";
+import { Data } from "@/types";
 
 export const metadata: Metadata = {
   title: "Next.js Profile | TailAdmin - Next.js Dashboard Template",
@@ -13,21 +16,20 @@ export const metadata: Metadata = {
     "This is Next.js Profile page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
 };
 export default async function Account() {
-  const supabase = await createClient();
+  const loggedIn = await isLoggedIn();
 
-  const { data, error } = await supabase.auth.getUser();
+  if (loggedIn) {
+    const { data, user } = await loggedIn;
 
-  if (error || !data?.user) {
-    redirect("/login");
+    const email: Data = { email: data.user.email ?? null };
+    return (
+      <ComponentCard title="Profile">
+        <PageBreadcrumb pageTitle="User profile" />
+        <div className="space-y-6">
+          <UserMetaCard />
+          <InfoCard user={user} data={email} />
+        </div>
+      </ComponentCard>
+    );
   }
-
-  return (
-    <ComponentCard title="Profile">
-      <PageBreadcrumb pageTitle="User profile" />
-      <div className="space-y-6">
-        <UserMetaCard />
-        <UserInfoCard />
-      </div>
-    </ComponentCard>
-  );
 }
