@@ -3,8 +3,8 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import VacatureTable from "@/components/tables/VacatureTable";
 import { Metadata } from "next";
 import React from "react";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { isLoggedIn } from "@/utils/supabase/loggedIn";
+import GET_VACANCIES from "@/utils/supabase/getVacancies";
 export const metadata: Metadata = {
   title: "Vacature Overzicht",
   description:
@@ -13,20 +13,20 @@ export const metadata: Metadata = {
 };
 
 export default async function BasicTables() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    redirect("/login");
-  }
+  const loggedIn = await isLoggedIn();
 
-  return (
-    <div>
-      <PageBreadcrumb pageTitle="Vacature overzicht" />
-      <div className="space-y-6">
-        <ComponentCard title="Een overzicht van alle vacatures">
-          <VacatureTable />
-        </ComponentCard>
+  if (loggedIn) {
+    const { vacancies } = await GET_VACANCIES();
+    const { user } = await loggedIn;
+    return (
+      <div>
+        <PageBreadcrumb pageTitle="Vacature overzicht" />
+        <div className="space-y-6">
+          <ComponentCard title="Een overzicht van alle vacatures">
+            <VacatureTable vacancies={vacancies} user={user} />
+          </ComponentCard>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

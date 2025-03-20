@@ -10,6 +10,9 @@ export async function isLoggedIn() {
     redirect("/login");
   }
 
+  const isCurrentUser = data?.user?.id;
+  const isRole = data?.user?.role;
+
   const { data: user, error: userError } = await supabase
     .from("profiles")
     .select("full_name, role, id, position, phone")
@@ -28,5 +31,5 @@ export async function isLoggedIn() {
     return null;
   }
 
-  return { data, user, profiles };
+  return { data, user, profiles, isCurrentUser, isRole };
 }

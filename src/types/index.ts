@@ -19,3 +19,7 @@ export type Vacancy = {
   description: string;
   created_at: Date;
 };
+
+export interface Vacancies {
+  vacancies: Vacancy[];
+}

@@ -6,13 +6,23 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import GET_VACANCIES from "@/utils/supabase/getVacancies";
 import DeleteButton from "./DeleteButton";
 import Link from "next/link";
-import { Vacancy } from "@/types";
+import { Profile, Vacancy } from "@/types";
 
-export default async function VacatureTable() {
-  const { vacancies } = await GET_VACANCIES();
+interface VacancyTableProps {
+  vacancies: Vacancy[];
+  user: Profile;
+}
+
+export default async function VacatureTable({
+  vacancies,
+  user,
+}: VacancyTableProps) {
+  const isAdmin = user.role === "admin";
+  const isManager = user.role === "manager";
+  const isUser = user.role === "user";
+
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -57,6 +67,11 @@ export default async function VacatureTable() {
             {/* Table Body */}
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {vacancies.map((vacancy: Vacancy) => {
+                // make sure only isAdmin can delete all vacancies, and only the manager can delete their own vacancies.
+                const canDelete =
+                  isAdmin ||
+                  (isManager && vacancy.user_full_name === user.full_name);
+
                 return (
                   <>
                     <TableRow key={vacancy.id}>
@@ -112,7 +127,7 @@ export default async function VacatureTable() {
                           </svg>
                           Edit vacancy
                         </Link>
-                        <DeleteButton vacancy={vacancy} />
+                        {canDelete ? <DeleteButton vacancy={vacancy} /> : null}
                       </TableCell>
                     </TableRow>
                   </>
