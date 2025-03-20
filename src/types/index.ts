@@ -8,6 +8,7 @@ export type Profile = {
   id: string;
   position: string;
   phone: string;
+  username: string;
 };
 
 export type Vacancy = {

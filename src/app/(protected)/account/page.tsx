@@ -1,14 +1,11 @@
 import { Metadata } from "next";
 import React from "react";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import UserMetaCard from "@/components/user-profile/UserMetaCard";
-import UserInfoCard from "@/components/user-profile/UserInfoCard";
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { isLoggedIn } from "@/utils/supabase/loggedIn";
 import InfoCard from "@/components/user-profile/InfoCard";
 import { Data } from "@/types";
+import UserMetaCard from "@/components/user-profile/UserMetaCard";
 
 export const metadata: Metadata = {
   title: "Next.js Profile | TailAdmin - Next.js Dashboard Template",

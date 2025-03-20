@@ -15,6 +15,7 @@ export default function AuthProvider({
   const setUser = useAuthStore((state) => state.setUser);
   const setProfile = useAuthStore((state) => state.setProfile);
   const setProfiles = useAuthStore((state) => state.setProfiles);
+  const isAdmin = useAuthStore((state) => state.isAdmin);
 
   useEffect(() => {
     const fetchProfiles = async () => {

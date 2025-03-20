@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import { useProfile } from "@/context/ProfileContext";
 import UserAvatar from "../UserAvatar";
 import { useAuthStore } from "@/store/authStore";
 

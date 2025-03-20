@@ -15,7 +15,7 @@ export async function isLoggedIn() {
 
   const { data: user, error: userError } = await supabase
     .from("profiles")
-    .select("full_name, role, id, position, phone")
+    .select("full_name, role, id, position, phone, username")
     .eq("id", data?.user?.id)
     .single();
 
