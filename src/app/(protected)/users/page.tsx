@@ -2,8 +2,6 @@ import React from "react";
 import ComponentCard from "@/components/common/ComponentCard";
 import UsersTable from "@/components/tables/UsersTable";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import { useAuthStore } from "@/store/authStore";
-
 function UsersPage() {
   return (
     <ComponentCard title="Users">

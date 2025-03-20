@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import React from "react";
-import AccountForm from "./account-form";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import UserMetaCard from "@/components/user-profile/UserMetaCard";
@@ -21,8 +20,6 @@ export default async function Account() {
   if (error || !data?.user) {
     redirect("/login");
   }
-
-  const user = data.user;
 
   return (
     <ComponentCard title="Profile">
