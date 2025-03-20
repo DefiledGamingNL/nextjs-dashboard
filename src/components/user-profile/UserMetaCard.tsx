@@ -71,7 +71,7 @@ export default function UserMetaCard() {
       return;
     }
 
-    setProfile({ ...user, username });
+    setProfile({ ...user, username, profile });
 
     toast.success("Username updated successfully");
     closeModal();
@@ -93,7 +93,7 @@ export default function UserMetaCard() {
             />
             <div className="order-3 xl:order-2">
               <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
-                {username || "Username not set"} - {profile?.role}
+                {username || "Username not set"}
               </h4>
             </div>
             <div className="flex items-center order-2 gap-2 grow xl:order-3 xl:justify-end">

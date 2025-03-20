@@ -1,17 +1,10 @@
 import React from "react";
-import { isAuthenticated } from "@/utils/supabase/isAuthenticated";
-import NotFound from "@/app/not-found";
 import ComponentCard from "@/components/common/ComponentCard";
 import UsersTable from "@/components/tables/UsersTable";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import { useAuthStore } from "@/store/authStore";
 
-async function UsersPage() {
-  const authenticated = await isAuthenticated();
-
-  if (!authenticated) {
-    return NotFound;
-  }
-
+function UsersPage() {
   return (
     <ComponentCard title="Users">
       <PageBreadcrumb pageTitle="All users" />

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import { createClient } from "@/utils/supabase/client";
 import { useAuthStore } from "./authStore";
+import { toast } from "sonner";
 
 const supabase = createClient();
 
@@ -13,6 +14,24 @@ export default function AuthProvider({
 }) {
   const setUser = useAuthStore((state) => state.setUser);
   const setProfile = useAuthStore((state) => state.setProfile);
+  const setProfiles = useAuthStore((state) => state.setProfiles);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      const { data: profiles, error } = await supabase
+        .from("profiles")
+        .select("*");
+
+      if (error) {
+        toast.error("Failed to fetch profiles");
+        return;
+      }
+
+      setProfiles(profiles);
+    };
+
+    fetchProfiles();
+  }, [setProfiles]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,7 +39,7 @@ export default function AuthProvider({
         data: { user },
         error,
       } = await supabase.auth.getUser();
-      if (error) return console.error(error);
+      if (error) return null;
 
       setUser(user);
 
@@ -32,7 +51,7 @@ export default function AuthProvider({
           .eq("id", user.id)
           .single();
 
-        if (profileError) return console.error(profileError);
+        if (profileError) return null;
         setProfile(profile);
       }
     };
