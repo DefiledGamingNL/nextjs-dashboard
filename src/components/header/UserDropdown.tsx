@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import UserAvatar from "../UserAvatar";
 import { useAuthStore } from "@/store/authStore";
+import UserAvatar from "../UserAvatar";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);

@@ -13,6 +13,7 @@ interface Profiles {
   full_name: string;
   position: string;
   role: string;
+  online_status: boolean;
 }
 
 export default function UsersTable({ profiles }: { profiles: Profiles[] }) {
@@ -48,6 +49,12 @@ export default function UsersTable({ profiles }: { profiles: Profiles[] }) {
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
                   Role
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Online status
                 </TableCell>
               </TableRow>
             </TableHeader>
@@ -88,6 +95,15 @@ export default function UsersTable({ profiles }: { profiles: Profiles[] }) {
                     <TableCell className="px-5 py-3">
                       <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
                         {profile?.role}
+                      </span>
+                    </TableCell>
+                    <TableCell className="px-5 py-3">
+                      <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                        {profile?.online_status ? (
+                          <p className="text-green-500">Online</p>
+                        ) : (
+                          <p className="text-red-500">Offline</p>
+                        )}
                       </span>
                     </TableCell>
                   </TableRow>

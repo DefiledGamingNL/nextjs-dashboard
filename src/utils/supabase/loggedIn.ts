@@ -15,7 +15,7 @@ export async function isLoggedIn() {
 
   const { data: user, error: userError } = await supabase
     .from("profiles")
-    .select("full_name, role, id, position, phone, username")
+    .select("full_name, role, id, position, phone, username, online_status")
     .eq("id", data?.user?.id)
     .single();
 
@@ -25,7 +25,11 @@ export async function isLoggedIn() {
 
   const { data: profiles, error: profileError } = await supabase
     .from("profiles")
-    .select("*");
+    .select("*")
+    .order("online_status", { ascending: false })
+    .order("role", {
+      ascending: true,
+    });
 
   if (profileError) {
     return null;

@@ -1,77 +1,47 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { useModal } from "@/hooks/useModal";
 import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { createClient } from "@/utils/supabase/client";
-import UserAvatar from "../UserAvatar";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
-import { Profile } from "@/types";
 
-function UsernameEditButton({ user: userProfile }: { user: Profile }) {
-  const supabase = createClient();
+const supabase = createClient();
+
+function UsernameEditButton() {
   const { isOpen, openModal, closeModal } = useModal();
 
-  // State for user data
-  const [user, setUser] = useState<any | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const setProfile = useAuthStore((state) => state.setProfile);
+  // Get profile from Zustand
   const profile = useAuthStore((state) => state.profile);
+  const setProfile = useAuthStore((state) => state.setProfile);
 
-  // Fetch user data from Supabase
-  useEffect(() => {
-    async function fetchUserProfile() {
-      setLoading(true);
-
-      const { data: authData, error: authError } =
-        await supabase.auth.getUser();
-      if (authError || !authData?.user) {
-        console.error("User not found");
-        return;
-      }
-
-      const userId = authData.user.id;
-
-      // Fetch profile from Supabase
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select(`username`)
-        .eq("id", userId)
-        .single();
-
-      if (profileError) {
-        console.error("Profile Fetch Error:", profileError.message);
-        return;
-      }
-
-      setUser(authData.user);
-      setUsername(profileData.username);
-      setLoading(false);
-    }
-
-    fetchUserProfile();
-  }, []);
+  // Controlled input state
+  const [username, setUsername] = useState(profile?.username || "");
+  const [loading, setLoading] = useState(false);
 
   // Update username in Supabase
   const handleSave = async () => {
-    if (!user) return;
+    if (!profile) return;
     setLoading(true);
 
     const { error } = await supabase
       .from("profiles")
       .update({ username, updated_at: new Date().toISOString() })
-      .eq("id", user.id);
+      .eq("id", profile.id);
 
     if (error) {
       console.error("Error updating username:", error.message);
+      toast.error("Failed to update username");
+      setLoading(false);
       return;
     }
 
-    setProfile({ ...user, username, profile });
+    // Optimistically update Zustand for instant UI change
+    setProfile({ ...profile, username });
 
     toast.success("Username updated successfully");
     closeModal();
@@ -114,7 +84,7 @@ function UsernameEditButton({ user: userProfile }: { user: Profile }) {
               <Label>Username</Label>
               <Input
                 type="text"
-                value={username ?? ""}
+                value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>

@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type User } from "@supabase/supabase-js";
 import { createClient } from "@/utils/supabase/client";
+import { toast } from "sonner";
 
 interface UserProfile {
   id: string;
@@ -11,6 +12,7 @@ interface UserProfile {
   phone: string;
   avatar_url: string;
   role: string;
+  online_status: boolean;
 }
 
 type AuthStore = {
@@ -18,9 +20,11 @@ type AuthStore = {
   profile: UserProfile | null;
   profiles: UserProfile[] | null;
   isAdmin: boolean;
+  isOnline: boolean;
   setUser: (user: User | null) => void;
   setProfile: (profile: UserProfile | null) => void;
   setProfiles: (profiles: UserProfile[] | null) => void;
+  setIsOnline: (isOnline: boolean) => void;
   checkAdmin: () => Promise<void>;
   logout: () => void;
 };
@@ -31,7 +35,28 @@ export const useAuthStore = create<AuthStore>()(
       user: null,
       profile: null,
       isAdmin: false,
+      isOnline: false,
       profiles: [],
+
+      setIsOnline: async (isOnline: boolean) => {
+        set({ isOnline });
+
+        // Check if user is logged in before updating the online status
+        const user = get().user;
+        if (!user) return;
+
+        const supabase = await createClient();
+
+        // Update the online_status in the database
+        const { error } = await supabase
+          .from("profiles")
+          .update({ online_status: isOnline })
+          .eq("id", user.id);
+
+        if (error) {
+          toast.error("Failed to update online status");
+        }
+      },
 
       setUser: (user) => set({ user }),
       setProfile: (profile) => {

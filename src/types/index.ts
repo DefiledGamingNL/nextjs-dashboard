@@ -9,6 +9,7 @@ export type Profile = {
   position: string;
   phone: string;
   username: string;
+  online_status?: boolean;
 };
 
 export type Vacancy = {
