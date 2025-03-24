@@ -62,19 +62,24 @@ function UpdateProfileForm({ profile, user }: ProfileFormProps) {
         throw error;
       }
 
-      // Update the user
-      const { error: userError } = await supabase.auth.updateUser({
-        email: values.email,
-      });
-      if (userError) {
-        throw userError;
+      // only update the email if it has changed
+      if (values.email !== user.email) {
+        const { error: emailError } = await supabase.auth.updateUser({
+          email: values.email,
+        });
+
+        if (emailError) {
+          throw emailError;
+        }
       }
-      setLoading(false);
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       setLoading(false);
     } finally {
-      toast.success("Profile updated successfully");
+      toast.success(
+        "Profile updated successfully, if email has changed also check your inbox for verification email."
+      );
+      setLoading(false);
       redirect("/account");
     }
   };
