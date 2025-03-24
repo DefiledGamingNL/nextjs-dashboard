@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "../ui/table";
 import UserAvatar from "../UserAvatar";
+import DeleteUserButton from "../DeleteUserButton";
 
 interface Profiles {
   id: string;
@@ -55,6 +56,12 @@ export default function UsersTable({ profiles }: { profiles: Profiles[] }) {
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
                   Online status
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Actions
                 </TableCell>
               </TableRow>
             </TableHeader>
@@ -105,6 +112,9 @@ export default function UsersTable({ profiles }: { profiles: Profiles[] }) {
                           <p className="text-red-500">Offline</p>
                         )}
                       </span>
+                    </TableCell>
+                    <TableCell className="px-5 py-3">
+                      <DeleteUserButton userId={profile.id} />
                     </TableCell>
                   </TableRow>
                 );

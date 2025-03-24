@@ -68,7 +68,7 @@ const AppSidebar: React.FC = () => {
         {
           name: "Create User",
           path: "/account/create-user",
-          isManagerOrAdmin: true,
+          isAdmin: true,
         },
       ],
     },
@@ -76,33 +76,6 @@ const AppSidebar: React.FC = () => {
       name: "Support",
       icon: <PageIcon />,
       path: "/support",
-    },
-    {
-      icon: <PlugInIcon />,
-      name: "Authentication",
-      subItems: [{ name: "Sign In", path: "/login" }],
-    },
-    {
-      icon: <TableIcon />,
-      name: "Manager Dashboard",
-      path: "/manager-dashboard",
-      isManagerOrAdmin: true, // Only for Manager or Admin
-    },
-    {
-      icon: <UserCircleIcon />,
-      name: "Manager Settings",
-      subItems: [
-        {
-          name: "Manage Roles",
-          path: "/manager/roles",
-          isManagerOrAdmin: true,
-        },
-        {
-          name: "Manage Permissions",
-          path: "/manager/permissions",
-          isManagerOrAdmin: true,
-        },
-      ],
     },
   ];
 
