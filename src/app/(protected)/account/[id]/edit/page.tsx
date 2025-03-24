@@ -1,5 +1,6 @@
 import ComponentCard from "@/components/common/ComponentCard";
 import Input from "@/components/form/input/InputField";
+import UpdateProfileForm from "@/components/form/UpdateProfileForm";
 import { isLoggedIn } from "@/utils/supabase/loggedIn";
 import { Label } from "@radix-ui/react-label";
 import { redirect } from "next/navigation";
@@ -29,36 +30,14 @@ async function SingleUserPage({ params }: SingleUserPageProps) {
                 Update your details to keep your profile up-to-date.
               </p>
             </div>
-            <form className="flex flex-col">
-              <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
-                <div className="mt-7">
-                  <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
-                    Personal Information
-                  </h5>
-
-                  <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                    <div className="col-span-2 lg:col-span-1">
-                      <Label>Full name</Label>
-                      <Input type="text" defaultValue={user?.full_name} />
-                    </div>
-
-                    <div className="col-span-2 lg:col-span-1">
-                      <Label>Email Address</Label>
-                      <Input type="email" defaultValue={data?.user?.email} />
-                    </div>
-
-                    <div className="col-span-2 lg:col-span-1">
-                      <Label>Position</Label>
-                      <Input type="text" defaultValue={user?.position} />
-                    </div>
-                    <div className="col-span-2 lg:col-span-1">
-                      <Label>Phone number</Label>
-                      <Input type="text" defaultValue={user?.phone} />
-                    </div>
-                  </div>
-                </div>
+            <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
+              <div className="mt-7">
+                <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                  Personal Information
+                </h5>
+                <UpdateProfileForm user={data.user} profile={user} />
               </div>
-            </form>
+            </div>
           </div>
         </ComponentCard>
       );
