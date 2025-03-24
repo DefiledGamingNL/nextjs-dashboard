@@ -35,7 +35,7 @@ const UserAvatar: React.FC<AvatarProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const supabase = createClient();
   const { isOpen, openModal, closeModal } = useModal();
-  const avatarUrl = avatars[userId || ""] || "/user/owner.jpg"; // Fallback avatar
+  const avatarUrl = avatars[userId || ""] || "/images/user/user-35.jpg"; // Fallback avatar
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -139,7 +139,7 @@ const UserAvatar: React.FC<AvatarProps> = ({
     if (updateError) {
       toast.error("Avatar verwijderen mislukt.");
     } else {
-      setAvatar(userId, "/user/owner.jpg"); // Reset naar default avatar
+      setAvatar(userId, "/images/user/user-35.jpg"); // Reset naar default avatar
       toast.success("Avatar verwijderd.");
     }
 

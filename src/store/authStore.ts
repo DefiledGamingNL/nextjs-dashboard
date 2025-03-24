@@ -20,12 +20,14 @@ type AuthStore = {
   profile: UserProfile | null;
   profiles: UserProfile[] | null;
   isAdmin: boolean;
+  isManager: boolean;
   isOnline: boolean;
   setUser: (user: User | null) => void;
   setProfile: (profile: UserProfile | null) => void;
   setProfiles: (profiles: UserProfile[] | null) => void;
   setIsOnline: (isOnline: boolean) => void;
   checkAdmin: () => Promise<void>;
+  checkManager: () => Promise<void>;
   logout: () => void;
 };
 
@@ -35,8 +37,32 @@ export const useAuthStore = create<AuthStore>()(
       user: null,
       profile: null,
       isAdmin: false,
+      isManager: false,
       isOnline: false,
       profiles: [],
+
+      checkManager: async () => {
+        const supabase = await createClient();
+        const { data, error } = await supabase.auth.getUser();
+
+        if (error || !data?.user) {
+          set({ isManager: false });
+          return;
+        }
+
+        const { data: profileData, error: profileError } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        if (profileError || !profileData) {
+          set({ isManager: false });
+          return;
+        }
+
+        set({ isManager: profileData.role === "manager" });
+      },
 
       setIsOnline: async (isOnline: boolean) => {
         set({ isOnline });

@@ -62,6 +62,19 @@ function UpdateProfileForm({ profile, user }: ProfileFormProps) {
         throw error;
       }
 
+      // also update the vacancy table where user is the owner of the vacancy to change the name
+
+      const { error: vacancyError } = await supabase
+        .from("vacancies")
+        .update({
+          user_full_name: values.full_name,
+        })
+        .eq("user_id", profile.id);
+
+      if (vacancyError) {
+        throw vacancyError;
+      }
+
       // only update the email if it has changed
       if (values.email !== user.email) {
         const { error: emailError } = await supabase.auth.updateUser({
