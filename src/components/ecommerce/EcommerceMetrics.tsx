@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import Badge from "../ui/badge/Badge";
-import { ArrowDownIcon, ArrowUpIcon, BoxIconLine, GroupIcon } from "@/icons";
+import { BoxIconLine, GroupIcon } from "@/icons";
 import { createClient } from "@/utils/supabase/client";
 
 export const EcommerceMetrics = () => {

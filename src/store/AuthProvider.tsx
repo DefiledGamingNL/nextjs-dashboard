@@ -107,7 +107,9 @@ export default function AuthProvider({
           table: "profiles",
           filter: `id=eq.${user.id}`,
         },
-        (payload: RealtimePostgresChangesPayload<{ [key: string]: any }>) => {
+        (
+          payload: RealtimePostgresChangesPayload<{ [key: string]: unknown }>
+        ) => {
           console.log("Profile updated!", payload);
 
           // Ensure payload.new has expected profile properties

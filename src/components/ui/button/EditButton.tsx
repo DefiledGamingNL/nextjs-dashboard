@@ -18,6 +18,13 @@ interface Vacancy {
   description: string;
 }
 
+type UpdatedData = {
+  title?: string;
+  location?: string;
+  payment?: string;
+  description?: string;
+};
+
 export default function EditButton({ vacancy }: { vacancy: Vacancy }) {
   const { isOpen, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
@@ -30,7 +37,7 @@ export default function EditButton({ vacancy }: { vacancy: Vacancy }) {
     const supabase = createClient();
     setLoading(true);
 
-    const updatedData: any = {};
+    const updatedData: UpdatedData = {};
 
     if (title && title !== vacancy.title) updatedData.title = title;
     if (location && location !== vacancy.location)

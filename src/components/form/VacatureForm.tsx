@@ -59,8 +59,8 @@ const VacatureForm = ({ user }: UserProps) => {
       } else {
         toast.error(`Error! ${response.statusText}`);
       }
-    } catch (err: any) {
-      console.error(err.message);
+    } catch (err) {
+      console.error(err as string);
       toast.error("An error occurred. Please try again.");
       form.reset();
     } finally {

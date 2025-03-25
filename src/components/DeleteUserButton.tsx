@@ -41,8 +41,8 @@ export default function DeleteUserButton({
 
       toast.success("User deleted successfully");
       if (onSuccess) onSuccess();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err as string);
     } finally {
       setLoading(false);
       redirect("/users");

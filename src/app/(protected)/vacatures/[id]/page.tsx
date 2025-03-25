@@ -1,8 +1,5 @@
-import RichTextEditor from "@/components/RichTextEditor";
-import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/server";
 import ComponentCard from "@/components/common/ComponentCard";
-import Input from "@/components/form/input/InputField";
 import { EditVacatureForm } from "@/components/form/EditVacatureForm";
 import NotFound from "@/app/not-found";
 

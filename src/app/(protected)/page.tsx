@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 import React from "react";
-import UserInfoCard from "@/components/user-profile/UserInfoCard";
 import { isLoggedIn } from "@/utils/supabase/loggedIn";
 import InfoCard from "@/components/user-profile/InfoCard";
 import { Data } from "@/types";

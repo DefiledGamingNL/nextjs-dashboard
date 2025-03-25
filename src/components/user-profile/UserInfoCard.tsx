@@ -52,23 +52,9 @@ export default function UserInfoCard() {
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  });
 
   const { isOpen, openModal, closeModal } = useModal();
-
-  function formatPhoneNumber(phone: string | null): string | undefined {
-    if (!phone) return undefined; // Supabase verwacht undefined i.p.v. null
-
-    // Verwijder spaties, haakjes en streepjes
-    let cleaned = phone.replace(/[\s()-]/g, "");
-
-    // Voeg landcode toe als deze ontbreekt (voorbeeld: Nederland)
-    if (!cleaned.startsWith("+")) {
-      cleaned = `+31${cleaned.startsWith("0") ? cleaned.slice(1) : cleaned}`;
-    }
-
-    return cleaned;
-  }
 
   async function handleSave(event: React.FormEvent) {
     event.preventDefault();
@@ -118,8 +104,8 @@ export default function UserInfoCard() {
       toast.success("Profile updated successfully!");
 
       closeModal(); // Sluit de modal na succesvolle update
-    } catch (error: any) {
-      toast(`An error occured: ${error.message}`);
+    } catch (error) {
+      toast(`An error occured: ${error}`);
       console.error("An error occurred:", error);
     } finally {
       setLoading(false);

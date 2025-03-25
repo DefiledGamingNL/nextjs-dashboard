@@ -1,8 +1,6 @@
 import ComponentCard from "@/components/common/ComponentCard";
-import Input from "@/components/form/input/InputField";
 import UpdateProfileForm from "@/components/form/UpdateProfileForm";
 import { isLoggedIn } from "@/utils/supabase/loggedIn";
-import { Label } from "@radix-ui/react-label";
 import { redirect } from "next/navigation";
 import React from "react";
 

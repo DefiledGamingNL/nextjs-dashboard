@@ -15,8 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Input from "./input/InputField";
-import RichTextEditor from "../RichTextEditor";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
@@ -81,12 +80,10 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
         .eq("id", vacancy?.id);
 
       if (error) {
-        console.error(error);
         toast.error("An error occurred. Please try again.");
         return;
       }
-    } catch (err: any) {
-      console.error(err);
+    } catch (err) {
       toast.error("An error occurred. Please try again.");
       redirect(`/vacatures/${vacancy.id}`);
     } finally {
@@ -99,7 +96,7 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
   async function exportToPDF() {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([600, 400]); // Breedte x hoogte in punten
-    const { width, height } = page.getSize();
+    const { height } = page.getSize();
 
     // Formuliergegevens ophalen
     const formData = form.getValues();
@@ -216,11 +213,6 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  {/* <RichTextEditor
-                    {...field}
-                    content={field.value}
-                    onChange={field.onChange}
-                  /> */}
                   <TextArea
                     rows={12}
                     {...field}

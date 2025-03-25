@@ -13,7 +13,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Input from "@/components/form/input/InputField";
-import { createAdminClient } from "@/utils/supabase/adminClient";
 import { toast } from "sonner";
 
 const formSchema = z.object({
@@ -48,8 +47,8 @@ function UserCreationForm() {
 
       toast.success("User created successfully");
       form.reset();
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      toast.error(error as string);
     }
   }
 

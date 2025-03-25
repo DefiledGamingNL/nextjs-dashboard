@@ -10,7 +10,6 @@ import {
   HorizontaLDots,
   ListIcon,
   PageIcon,
-  PlugInIcon,
   TableIcon,
   UserCircleIcon,
 } from "../icons/index";
