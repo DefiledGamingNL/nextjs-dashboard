@@ -85,7 +85,7 @@ function UpdateProfileForm({ profile, user }: ProfileFormProps) {
         }
       }
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast.error(`"An error occurred. Please try again." ${error}`);
       setLoading(false);
     } finally {
       toast.success(
