@@ -47,6 +47,12 @@ export default async function VacatureTable({
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
+                  Audience
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
                   Location
                 </TableCell>
                 <TableCell
@@ -79,7 +85,7 @@ export default async function VacatureTable({
                         <div className="flex items-center space-x-3">
                           <div>
                             <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                              {vacancy.user_full_name}
+                              {vacancy?.user_full_name}
                             </h3>
                           </div>
                         </div>
@@ -88,19 +94,28 @@ export default async function VacatureTable({
                         <div className="flex items-center space-x-3">
                           <div>
                             <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                              {vacancy.title}
+                              {vacancy?.title}
+                            </h3>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="px-5 py-3">
+                        <div className="flex items-center space-x-3">
+                          <div>
+                            <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                              {vacancy?.audience}
                             </h3>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell className="px-5 py-3">
                         <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                          {vacancy.location}
+                          {vacancy?.location}
                         </span>
                       </TableCell>
                       <TableCell className="px-5 py-3">
                         <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                          {new Date(vacancy.created_at).toLocaleDateString(
+                          {new Date(vacancy?.created_at).toLocaleDateString(
                             "nl-NL",
                             { year: "numeric", month: "long", day: "numeric" }
                           )}
@@ -109,7 +124,7 @@ export default async function VacatureTable({
                       <TableCell className="px-5 py-3 flex items-center gap-3">
                         <Link
                           prefetch={true}
-                          href={`/vacatures/${vacancy.id}`}
+                          href={`/vacatures/${vacancy?.id}`}
                           className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
                         >
                           <svg

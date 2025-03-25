@@ -15,6 +15,7 @@ export type Profile = {
 export type Vacancy = {
   id: number;
   user_full_name: string;
+  audience: string;
   title: string;
   location: string;
   payment: string;

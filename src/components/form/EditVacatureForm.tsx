@@ -21,9 +21,15 @@ import { toast } from "sonner";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
 import TextArea from "./input/TextArea";
+import DeleteButton from "../tables/DeleteButton";
 
 const formSchema = z.object({
+  user_full_name: z
+    .string()
+    .min(3, { message: "Name is too short" })
+    .optional(),
   title: z.string().min(3, { message: "Title is too short" }),
+  audience: z.string().min(3, { message: "Audience is too short" }),
   description: z.string().min(10, { message: "Description is too short" }),
   location: z.string().min(3, { message: "Location is too short" }),
   payment: z.string().min(1, { message: "Payment is too low" }),
@@ -32,7 +38,9 @@ const formSchema = z.object({
 interface VacancyProps {
   vacancy: {
     id: string;
+    user_full_name?: string;
     title: string;
+    audience: string;
     description: string;
     location: string;
     payment: string;
@@ -45,10 +53,12 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: vacancy.title || "",
-      description: vacancy.description || "",
-      location: vacancy.location || "",
-      payment: vacancy.payment || "",
+      user_full_name: vacancy?.user_full_name || "",
+      title: vacancy?.title || "",
+      audience: vacancy?.audience || "",
+      description: vacancy?.description || "",
+      location: vacancy?.location || "",
+      payment: vacancy?.payment || "",
     },
   });
 
@@ -62,12 +72,13 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
       const { error } = await supabase
         .from("vacancies")
         .update({
-          title: values.title,
-          description: values.description,
-          location: values.location,
-          payment: values.payment,
+          audience: values?.audience,
+          title: values?.title,
+          description: values?.description,
+          location: values?.location,
+          payment: values?.payment,
         })
-        .eq("id", vacancy.id);
+        .eq("id", vacancy?.id);
 
       if (error) {
         console.error(error);
@@ -121,6 +132,38 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="user_full_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>User</FormLabel>
+                <FormControl>
+                  <Input {...field} disabled />
+                </FormControl>
+                <FormDescription>
+                  This is the user who created the vacancy.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="audience"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Audience</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Enter audience" />
+                </FormControl>
+                <FormDescription>
+                  Set the audience of the vacancy.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="title"
@@ -190,9 +233,12 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
             )}
           />
           <div className="flex justify-between">
-            <Button size="md" type="submit" disabled={loading}>
-              {loading ? "Updating..." : "Update"}
-            </Button>
+            <div className="flex space-x-4">
+              <Button size="md" type="submit" disabled={loading}>
+                {loading ? "Updating..." : "Update"}
+              </Button>
+              <DeleteButton vacancy={vacancy} />
+            </div>
 
             <div className="flex flex-col lg:flex-row space-x-4">
               <Button
@@ -200,8 +246,9 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
                 size="md"
                 type="button"
                 onClick={() => redirect(`/vacatures/${vacancy.id}`)}
+                disabled
               >
-                Facebook
+                Website
               </Button>
               <Button
                 className="bg-blue-500 hover:bg-blue-700 text-white"

@@ -14,7 +14,9 @@ import { Button } from "../ui/button";
 import { useModal } from "@/hooks/useModal";
 
 interface Vacancy {
-  id: number;
+  id: number | string;
+  user_full_name?: string;
+  audience?: string;
   title: string;
   location: string;
   payment: string;
