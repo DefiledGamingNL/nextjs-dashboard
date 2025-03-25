@@ -7,7 +7,6 @@ import {
   TableRow,
 } from "../ui/table";
 import GET_VACANCIES from "@/utils/supabase/getVacancies";
-import EditButton from "../ui/button/EditButton";
 import DeleteButton from "./DeleteButton";
 import Link from "next/link";
 

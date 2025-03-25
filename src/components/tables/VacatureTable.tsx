@@ -21,7 +21,6 @@ export default async function VacatureTable({
 }: VacancyTableProps) {
   const isAdmin = user.role === "admin";
   const isManager = user.role === "manager";
-  const isUser = user.role === "user";
 
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">

@@ -84,7 +84,7 @@ export function EditVacatureForm({ vacancy }: VacancyProps) {
         return;
       }
     } catch (err) {
-      toast.error("An error occurred. Please try again.");
+      toast.error(`An error occurred. Please try again. ${err}`);
       redirect(`/vacatures/${vacancy.id}`);
     } finally {
       toast.success("Vacancy updated successfully");

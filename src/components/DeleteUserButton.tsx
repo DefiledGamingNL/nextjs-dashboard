@@ -50,12 +50,15 @@ export default function DeleteUserButton({
   };
 
   return (
-    <button
-      className="flex w-full items-center justify-center gap-2 rounded-full border border-red-300 bg-red-600 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-red-700 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
-      onClick={handleDelete}
-      disabled={loading}
-    >
-      <TrashBinIcon /> {loading ? "Deleting..." : "Delete"}
-    </button>
+    <>
+      <button
+        className="flex w-full items-center justify-center gap-2 rounded-full border border-red-300 bg-red-600 px-4 py-3 text-sm font-medium text-white shadow-theme-xs hover:bg-red-700 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
+        onClick={handleDelete}
+        disabled={loading}
+      >
+        <TrashBinIcon /> {loading ? "Deleting..." : "Delete"}
+      </button>
+      {error && error}
+    </>
   );
 }
